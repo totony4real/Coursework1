@@ -17,12 +17,46 @@ def fare_price(distance, different_regions, hubs_in_dest_region):
 
 
 class Station:
+    def __init__(self, name, region, crs, lat, lon, hub):
+
+        if not all(isinstance(argu,str) for argu in [name, region, crs]):
+            raise TypeError('Name, region and CRS muct have format of strings')
+        
+        if len(crs) != 3 or not crs.isupper() or not crs.isalpha():
+            raise ValueError("CRS code must be a 3-character string with uppercase letters only.")
+        
+        if not (-90 <= lat <= 90):
+            raise ValueError("Latitude must be within the range -90 to 90 degrees.")
+        if not (-180 <= lon <= 180):
+            raise ValueError("Longitude must be within the range -180 to 180 degrees.")
+        
+        if not isinstance(hub, bool):
+            raise TypeError("Hub flag must be a boolean value.")
+
+        self.name = name
+        self.region = region
+        self.crs = crs
+        self.lat = lat
+        self.lon = lon
+        self.hub = hub
+
+        
+
+        
     def distance_to(self):
         pass
 
 
 
 class RailNetwork:
+    def __init__(self, stations_list):
+        self.stations = {}
+        for station in stations_list:
+            if station.crs in self.stations:
+                raise ValueError(f"Duplicate CRS code found: {station.crs}")
+            self.stations[station.crs] = station
+
+            
     def regions(self):
         raise NotImplementedError
 
