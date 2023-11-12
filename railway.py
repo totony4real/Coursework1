@@ -1,13 +1,25 @@
 import matplotlib.pyplot as plt
+import math
+
 
 
 def fare_price(distance, different_regions, hubs_in_dest_region):
-    raise NotImplementedError
+    """
+    This function calculates the fare price from two stations according to their distance, 
+    whether the journey involves different regions, and the number of hubs in the destination region.
+    
+    """
+    
+    e = math.e
+    fare = 1 + distance * math.exp(-distance / 100) * (1 + (different_regions * hubs_in_dest_region) / 10)
+
+    return fare
 
 
 class Station:
     def distance_to(self):
-        raise NotImplementedError
+        pass
+
 
 
 class RailNetwork:
